@@ -1,17 +1,17 @@
 import request from 'supertest'
 import { apiRoot } from '../../config'
 import express from '../../services/express'
-import routes, { Songs } from '.'
+import routes, { Artists } from '.'
 
 const app = () => express(apiRoot, routes)
 
-let songs
+let artists
 
 beforeEach(async () => {
-  songs = await Songs.create({})
+  artists = await Artists.create({})
 })
 
-test('POST /songs 201', async () => {
+test('POST /artists 201', async () => {
   const { status, body } = await request(app())
     .post(`${apiRoot}`)
     .send({ artistName: 'test', artistRanking: 'test' })
@@ -21,7 +21,7 @@ test('POST /songs 201', async () => {
   expect(body.artistRanking).toEqual('test')
 })
 
-test('GET /songs 200', async () => {
+test('GET /artists 200', async () => {
   const { status, body } = await request(app())
     .get(`${apiRoot}`)
   expect(status).toBe(200)
@@ -29,45 +29,45 @@ test('GET /songs 200', async () => {
   expect(Number.isNaN(body.count)).toBe(false)
 })
 
-test('GET /songs/:id 200', async () => {
+test('GET /artists/:id 200', async () => {
   const { status, body } = await request(app())
-    .get(`${apiRoot}/${songs.id}`)
+    .get(`${apiRoot}/${artists.id}`)
   expect(status).toBe(200)
   expect(typeof body).toEqual('object')
-  expect(body.id).toEqual(songs.id)
+  expect(body.id).toEqual(artists.id)
 })
 
-test('GET /songs/:id 404', async () => {
+test('GET /artists/:id 404', async () => {
   const { status } = await request(app())
     .get(apiRoot + '/123456789098765432123456')
   expect(status).toBe(404)
 })
 
-test('PUT /songs/:id 200', async () => {
+test('PUT /artists/:id 200', async () => {
   const { status, body } = await request(app())
-    .put(`${apiRoot}/${songs.id}`)
+    .put(`${apiRoot}/${artists.id}`)
     .send({ artistName: 'test', artistRanking: 'test' })
   expect(status).toBe(200)
   expect(typeof body).toEqual('object')
-  expect(body.id).toEqual(songs.id)
+  expect(body.id).toEqual(artists.id)
   expect(body.artistName).toEqual('test')
   expect(body.artistRanking).toEqual('test')
 })
 
-test('PUT /songs/:id 404', async () => {
+test('PUT /artists/:id 404', async () => {
   const { status } = await request(app())
     .put(apiRoot + '/123456789098765432123456')
     .send({ artistName: 'test', artistRanking: 'test' })
   expect(status).toBe(404)
 })
 
-test('DELETE /songs/:id 204', async () => {
+test('DELETE /artists/:id 204', async () => {
   const { status } = await request(app())
-    .delete(`${apiRoot}/${songs.id}`)
+    .delete(`${apiRoot}/${artists.id}`)
   expect(status).toBe(204)
 })
 
-test('DELETE /songs/:id 404', async () => {
+test('DELETE /artists/:id 404', async () => {
   const { status } = await request(app())
     .delete(apiRoot + '/123456789098765432123456')
   expect(status).toBe(404)

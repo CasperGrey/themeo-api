@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 
-const songsSchema = new Schema({
+const artistsSchema = new Schema({
   artistName: {
     type: String
   },
@@ -15,7 +15,7 @@ const songsSchema = new Schema({
   }
 })
 
-songsSchema.methods = {
+artistsSchema.methods = {
   view (full) {
     const view = {
       // simple view
@@ -33,7 +33,7 @@ songsSchema.methods = {
   }
 }
 
-const model = mongoose.model('Songs', songsSchema)
+const model = mongoose.model('Artists', artistsSchema)
 
 export const schema = model.schema
 export default model

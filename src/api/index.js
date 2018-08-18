@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import songs from './songs'
+import artists from './artists'
 
 const router = new Router()
 
-router.use('/songs', songs)
+router.use('/artists', artists)
 
 /**
  * @apiDefine master Master access only
