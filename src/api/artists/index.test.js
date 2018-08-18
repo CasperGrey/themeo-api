@@ -1,24 +1,37 @@
 import request from 'supertest'
 import { apiRoot } from '../../config'
+import { signSync } from '../../services/jwt'
 import express from '../../services/express'
+import { User } from '../user'
 import routes, { Artists } from '.'
 
 const app = () => express(apiRoot, routes)
 
-let artists
+let userSession, anotherSession, artists
 
 beforeEach(async () => {
-  artists = await Artists.create({})
+  const user = await User.create({ email: 'a@a.com', password: '123456' })
+  const anotherUser = await User.create({ email: 'b@b.com', password: '123456' })
+  userSession = signSync(user.id)
+  anotherSession = signSync(anotherUser.id)
+  artists = await Artists.create({ createdBy: user })
 })
 
-test('POST /artists 201', async () => {
+test('POST /artists 201 (user)', async () => {
   const { status, body } = await request(app())
     .post(`${apiRoot}`)
-    .send({ artistName: 'test', artistRanking: 'test' })
+    .send({ access_token: userSession, artist_id: 'test', artist_name: 'test' })
   expect(status).toBe(201)
   expect(typeof body).toEqual('object')
-  expect(body.artistName).toEqual('test')
-  expect(body.artistRanking).toEqual('test')
+  expect(body.artist_id).toEqual('test')
+  expect(body.artist_name).toEqual('test')
+  expect(typeof body.createdBy).toEqual('object')
+})
+
+test('POST /artists 401', async () => {
+  const { status } = await request(app())
+    .post(`${apiRoot}`)
+  expect(status).toBe(401)
 })
 
 test('GET /artists 200', async () => {
@@ -43,32 +56,61 @@ test('GET /artists/:id 404', async () => {
   expect(status).toBe(404)
 })
 
-test('PUT /artists/:id 200', async () => {
+test('PUT /artists/:id 200 (user)', async () => {
   const { status, body } = await request(app())
     .put(`${apiRoot}/${artists.id}`)
-    .send({ artistName: 'test', artistRanking: 'test' })
+    .send({ access_token: userSession, artist_id: 'test', artist_name: 'test' })
   expect(status).toBe(200)
   expect(typeof body).toEqual('object')
   expect(body.id).toEqual(artists.id)
-  expect(body.artistName).toEqual('test')
-  expect(body.artistRanking).toEqual('test')
+  expect(body.artist_id).toEqual('test')
+  expect(body.artist_name).toEqual('test')
+  expect(typeof body.createdBy).toEqual('object')
 })
 
-test('PUT /artists/:id 404', async () => {
+test('PUT /artists/:id 401 (user) - another user', async () => {
+  const { status } = await request(app())
+    .put(`${apiRoot}/${artists.id}`)
+    .send({ access_token: anotherSession, artist_id: 'test', artist_name: 'test' })
+  expect(status).toBe(401)
+})
+
+test('PUT /artists/:id 401', async () => {
+  const { status } = await request(app())
+    .put(`${apiRoot}/${artists.id}`)
+  expect(status).toBe(401)
+})
+
+test('PUT /artists/:id 404 (user)', async () => {
   const { status } = await request(app())
     .put(apiRoot + '/123456789098765432123456')
-    .send({ artistName: 'test', artistRanking: 'test' })
+    .send({ access_token: anotherSession, artist_id: 'test', artist_name: 'test' })
   expect(status).toBe(404)
 })
 
-test('DELETE /artists/:id 204', async () => {
+test('DELETE /artists/:id 204 (user)', async () => {
   const { status } = await request(app())
     .delete(`${apiRoot}/${artists.id}`)
+    .query({ access_token: userSession })
   expect(status).toBe(204)
 })
 
-test('DELETE /artists/:id 404', async () => {
+test('DELETE /artists/:id 401 (user) - another user', async () => {
+  const { status } = await request(app())
+    .delete(`${apiRoot}/${artists.id}`)
+    .send({ access_token: anotherSession })
+  expect(status).toBe(401)
+})
+
+test('DELETE /artists/:id 401', async () => {
+  const { status } = await request(app())
+    .delete(`${apiRoot}/${artists.id}`)
+  expect(status).toBe(401)
+})
+
+test('DELETE /artists/:id 404 (user)', async () => {
   const { status } = await request(app())
     .delete(apiRoot + '/123456789098765432123456')
+    .query({ access_token: anotherSession })
   expect(status).toBe(404)
 })

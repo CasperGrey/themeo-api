@@ -1,10 +1,15 @@
 import mongoose, { Schema } from 'mongoose'
 
 const artistsSchema = new Schema({
-  artistName: {
+  createdBy: {
+    type: Schema.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  artist_id: {
     type: String
   },
-  artistRanking: {
+  artist_name: {
     type: String
   }
 }, {
@@ -20,8 +25,9 @@ artistsSchema.methods = {
     const view = {
       // simple view
       id: this.id,
-      artistName: this.artistName,
-      artistRanking: this.artistRanking,
+      createdBy: this.createdBy.view(full),
+      artist_id: this.artist_id,
+      artist_name: this.artist_name,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }
