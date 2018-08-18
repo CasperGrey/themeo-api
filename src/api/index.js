@@ -1,5 +1,9 @@
 import { Router } from 'express'
 import artists from './artists'
+import user from './user'
+import auth from './auth'
+import passwordReset from './password-reset'
+import songs from './songs'
 
 const router = new Router()
 
@@ -28,5 +32,11 @@ router.use('/artists', artists)
  * @apiParam {String[]} [sort=-createdAt] Order of returned items.
  * @apiParam {String[]} [fields] Fields to be returned.
  */
+
+router.use('/users', user)
+router.use('/auth', auth)
+router.use('/password-resets', passwordReset)
+router.use('/songs', songs),
+router.use('/artists', artists)
 
 export default router
