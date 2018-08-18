@@ -23,7 +23,7 @@ const { artist_id, artist_name } = schema.tree
  * @apiError 401 user access only.
  */
 router.post('/',
-  token({ required: false }),
+  token({ required: true }),
   body({ artist_id, artist_name }),
   create)
 
