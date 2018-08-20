@@ -1,4 +1,4 @@
-# themeo-api v0.0.1 
+# themeo-api v0.0.0
 
 
 
@@ -18,6 +18,25 @@
 	- [Send email](#send-email)
 	- [Submit password](#submit-password)
 	- [Verify token](#verify-token)
+	
+- [Scores](#scores)
+	- [Create scores](#create-scores)
+	- [Delete scores](#delete-scores)
+	- [Retrieve scores](#retrieve-scores)
+	- [Update scores](#update-scores)
+	
+- [Songs](#songs)
+	- [Create songs](#create-songs)
+	- [Delete songs](#delete-songs)
+	- [Retrieve songs](#retrieve-songs)
+	- [Update songs](#update-songs)
+	
+- [Theme](#theme)
+	- [Create theme](#create-theme)
+	- [Delete theme](#delete-theme)
+	- [Retrieve theme](#retrieve-theme)
+	- [Retrieve themes](#retrieve-themes)
+	- [Update theme](#update-theme)
 	
 - [User](#user)
 	- [Create user](#create-user)
@@ -176,6 +195,207 @@
 
 	GET /password-resets/:token
 
+
+# Scores
+
+## Create scores
+
+
+
+	POST /scores
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| score_id			| 			|  <p>Scores's score_id.</p>							|
+| theme_id			| 			|  <p>Scores's theme_id.</p>							|
+| user_id			| 			|  <p>Scores's user_id.</p>							|
+| song_id			| 			|  <p>Scores's song_id.</p>							|
+| score			| 			|  <p>Scores's score.</p>							|
+| song_comment			| 			|  <p>Scores's song_comment.</p>							|
+
+## Delete scores
+
+
+
+	DELETE /scores/:id
+
+
+## Retrieve scores
+
+
+
+	GET /scores
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| q			| String			| **optional** <p>Query to search.</p>							|
+| page			| Number			| **optional** <p>Page number.</p>							|
+| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
+| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
+| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
+
+## Update scores
+
+
+
+	PUT /scores/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| score_id			| 			|  <p>Scores's score_id.</p>							|
+| theme_id			| 			|  <p>Scores's theme_id.</p>							|
+| user_id			| 			|  <p>Scores's user_id.</p>							|
+| song_id			| 			|  <p>Scores's song_id.</p>							|
+| score			| 			|  <p>Scores's score.</p>							|
+| song_comment			| 			|  <p>Scores's song_comment.</p>							|
+
+# Songs
+
+## Create songs
+
+
+
+	POST /songs
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| song_id			| 			|  <p>Songs's song_id.</p>							|
+| songName			| 			|  <p>Songs's songName.</p>							|
+| user_id			| 			|  <p>Songs's user_id.</p>							|
+| artistName			| 			|  <p>Songs's artistName.</p>							|
+| comment			| 			|  <p>Songs's comment.</p>							|
+| url			| 			|  <p>Songs's url.</p>							|
+| videoId			| 			|  <p>Songs's videoId.</p>							|
+
+## Delete songs
+
+
+
+	DELETE /songs/:id
+
+
+## Retrieve songs
+
+
+
+	GET /songs
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| q			| String			| **optional** <p>Query to search.</p>							|
+| page			| Number			| **optional** <p>Page number.</p>							|
+| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
+| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
+| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
+
+## Update songs
+
+
+
+	PUT /songs/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| song_id			| 			|  <p>Songs's song_id.</p>							|
+| songName			| 			|  <p>Songs's songName.</p>							|
+| user_id			| 			|  <p>Songs's user_id.</p>							|
+| artistName			| 			|  <p>Songs's artistName.</p>							|
+| comment			| 			|  <p>Songs's comment.</p>							|
+| url			| 			|  <p>Songs's url.</p>							|
+| videoId			| 			|  <p>Songs's videoId.</p>							|
+
+# Theme
+
+## Create theme
+
+
+
+	POST /theme
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| theme_id			| 			|  <p>Theme's theme_id.</p>							|
+| theme_name			| 			|  <p>Theme's theme_name.</p>							|
+| theme_agent_id			| 			|  <p>Theme's theme_agent_id.</p>							|
+| theme_youtube			| 			|  <p>Theme's theme_youtube.</p>							|
+| theme_num_ppl			| 			|  <p>Theme's theme_num_ppl.</p>							|
+| theme_date			| 			|  <p>Theme's theme_date.</p>							|
+| seqNoCommentofWeek			| 			|  <p>Theme's seqNoCommentofWeek.</p>							|
+| theme_used			| 			|  <p>Theme's theme_used.</p>							|
+| theme_current			| 			|  <p>Theme's theme_current.</p>							|
+
+## Delete theme
+
+
+
+	DELETE /theme/:id
+
+
+## Retrieve theme
+
+
+
+	GET /theme/:id
+
+
+## Retrieve themes
+
+
+
+	GET /theme
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| q			| String			| **optional** <p>Query to search.</p>							|
+| page			| Number			| **optional** <p>Page number.</p>							|
+| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
+| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
+| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
+
+## Update theme
+
+
+
+	PUT /theme/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| theme_id			| 			|  <p>Theme's theme_id.</p>							|
+| theme_name			| 			|  <p>Theme's theme_name.</p>							|
+| theme_agent_id			| 			|  <p>Theme's theme_agent_id.</p>							|
+| theme_youtube			| 			|  <p>Theme's theme_youtube.</p>							|
+| theme_num_ppl			| 			|  <p>Theme's theme_num_ppl.</p>							|
+| theme_date			| 			|  <p>Theme's theme_date.</p>							|
+| seqNoCommentofWeek			| 			|  <p>Theme's seqNoCommentofWeek.</p>							|
+| theme_used			| 			|  <p>Theme's theme_used.</p>							|
+| theme_current			| 			|  <p>Theme's theme_current.</p>							|
 
 # User
 

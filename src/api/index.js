@@ -3,6 +3,9 @@ import user from './user'
 import auth from './auth'
 import passwordReset from './password-reset'
 import artists from './artists'
+import songs from './songs'
+import theme from './theme'
+import scores from './scores'
 
 const router = new Router()
 
@@ -33,5 +36,8 @@ router.use('/users', user)
 router.use('/auth', auth)
 router.use('/password-resets', passwordReset)
 router.use('/artists', artists)
+router.use('/songs', songs)
+router.use('/theme', theme)
+router.use('/scores', scores)
 
 export default router
