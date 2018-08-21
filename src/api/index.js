@@ -7,6 +7,7 @@ import theme from './theme'
 import scores from './scores'
 import songs from './songs'
 
+
 const router = new Router()
 
 /**
@@ -39,6 +40,7 @@ router.use('/artists', artists)
 router.use('/songs', songs)
 router.use('/theme', theme)
 router.use('/scores', scores)
+router.use('/songs', songs)
 router.use('/songs', songs)
 
 export default router
